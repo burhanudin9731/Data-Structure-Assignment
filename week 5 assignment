@@ -1,0 +1,16 @@
+infix           stack   output
+a                          a
+*                *         a                    infix=a*b+c
+b                *         ab                 postfix=ab*c+
++                +         ab*
+c                +        ab*c
+
+
+(                (
+a                          a
++                (+        a
+b                (+        ab            infix=(a+b)*c
+)       popuntil(          ab+            postfix=ab+c*
+*                *        ab+
+c                 *        ab+c
+
