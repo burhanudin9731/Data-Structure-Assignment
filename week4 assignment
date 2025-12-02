@@ -1,0 +1,117 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+    struct Node* prev;
+};
+
+
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+    return newNode;
+}
+
+
+void traverse(struct Node* head) {
+    struct Node* temp = head;
+    printf("List: ");
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+
+void insertFront(struct Node** head, int data) {
+    struct Node* newNode = createNode(data);
+    
+    newNode->next = *head;
+    if (*head != NULL)
+        (*head)->prev = newNode;
+    
+    *head = newNode;
+}
+
+
+void insertEnd(struct Node** head, int data) {
+    struct Node* newNode = createNode(data);
+
+    if (*head == NULL) {
+        *head = newNode;
+        return;
+    }
+
+    struct Node* temp = *head;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+    newNode->prev = temp;
+}
+
+
+void insertAfter(struct Node* prevNode, int data) {
+    if (prevNode == NULL) {
+        printf("Previous node cannot be NULL.\n");
+        return;
+    }
+
+    struct Node* newNode = createNode(data);
+
+    newNode->next = prevNode->next;
+    newNode->prev = prevNode;
+
+    if (prevNode->next != NULL)
+        prevNode->next->prev = newNode;
+
+    prevNode->next = newNode;
+}
+
+
+void deleteAll(struct Node* head) {
+    if (head == NULL)
+        return;
+
+    deleteAll(head->next);  
+    free(head);              
+}
+
+
+void printDifferences() {
+    printf("\n--- Difference Between Linked List and Circular Linked List ---\n");
+    printf("1. Normal Linked List ends with NULL.\n");
+    printf("2. Circular Linked List last node points back to head.\n");
+    printf("3. Circular lists are used in OS task scheduling.\n");
+    printf("4. Normal lists are easier for sorting.\n");
+    printf("5. Circular lists require manual stopping in loops.\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+
+    
+    insertFront(&head, 10);   
+    insertEnd(&head, 20);     
+    insertEnd(&head, 30);     
+    
+    
+    insertAfter(head, 15);    
+
+    traverse(head);
+
+    printDifferences();
+
+    
+    deleteAll(head);
+    head = NULL;
+
+    printf("\nAll nodes deleted.\n");
+
+    return 0;
+}
