@@ -1,0 +1,14 @@
+        1            
+       / \
+      2   3            pre order(root>left>right)=1245367
+     / \ / \
+    4  5 6  7
+
+another example x=y*(z+1)
+        =
+       / \
+      x   *
+         / \
+        y   +
+           / \
+          z   1
