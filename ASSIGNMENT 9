@@ -1,0 +1,136 @@
+DFS Application:
+1. Finding Connected Components (Clusters)
+2. Cycle Detection - detects cycles in directed and undirected graphs
+3. Topological Sorting - orders tasks based on dependencies
+4. Path Finding and maze solving - explores all possible paths
+5. Tree traversals - inorder,preorder, postorder traversals
+6. Artificial Intelligence - used in game trees.
+
+
+  BFS Application:
+1. Shortest Path in Unweighted Graphs - find the shortest number of edges
+2. Level Order Traversal of Trees  - traverses tree level by level
+3. Bipartite Graph Checking - determine whether graph can be divided into two sets
+4. Web Crawlers - Crawls web pages level by level
+5. Broadcasting in Networks - used in packet routing for communication
+6. Shortest Path in Grids and Mazes - for robot navigation
+
+
+
+
+
+🔹 DFS (Depth First Search)
+
+📌 Definition
+DFS is a graph traversal technique where we start from a node and explore as deep as possible before backtracking.
+
+DFS uses:
+
+Stack (explicitly or via recursion)
+
+📌 DFS Algorithm (Steps)
+
+Start from a source node
+
+Mark it as visited
+
+Visit an unvisited adjacent node
+
+Repeat until no unvisited node remains
+
+Backtrack
+
+
+
+//DFS EXAMPLE
+
+#include <stdio.h>
+
+int visited[10];
+
+void DFS(int graph[10][10], int n, int v) {
+    int i;
+    visited[v] = 1;
+    printf("%d ", v);
+
+    for(i = 0; i < n; i++) {
+        if(graph[v][i] == 1 && !visited[i]) {
+            DFS(graph, n, i);
+        }
+    }
+}
+
+int main() {
+    int n = 4;
+    int graph[10][10] = {
+        {0,1,1,0},
+        {1,0,0,1},
+        {1,0,0,1},
+        {0,1,1,0}
+    };
+
+    DFS(graph, n, 0);
+    return 0;
+}
+
+
+
+
+🔹 BFS (Breadth First Search)
+📌 Definition
+BFS is a graph traversal technique where we explore all neighboring nodes first, level by level.
+
+BFS uses:
+
+Queue
+
+📌 BFS Algorithm (Steps)
+
+Start from source node
+
+Enqueue it and mark as visited
+
+Dequeue a node and visit its neighbors
+
+Enqueue unvisited neighbors
+
+Repeat until queue is empty
+
+
+
+//BFS EXAMPLE
+
+#include <stdio.h>
+
+int visited[10], queue[10], front = -1, rear = -1;
+
+void BFS(int graph[10][10], int n, int start) {
+    int i;
+    queue[++rear] = start;
+    visited[start] = 1;
+
+    while(front != rear) {
+        int v = queue[++front];
+        printf("%d ", v);
+
+        for(i = 0; i < n; i++) {
+            if(graph[v][i] == 1 && !visited[i]) {
+                queue[++rear] = i;
+                visited[i] = 1;
+            }
+        }
+    }
+}
+
+int main() {
+    int n = 4;
+    int graph[10][10] = {
+        {0,1,1,0},
+        {1,0,0,1},
+        {1,0,0,1},
+        {0,1,1,0}
+    };
+
+    BFS(graph, n, 0);
+    return 0;
+}
